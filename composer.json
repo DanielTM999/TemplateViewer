@@ -1,0 +1,20 @@
+{
+    "name": "danieltm/template_viewer",
+    "description": "Biblioteca de template Origins",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Danieltm\\TemplateViewer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniel Teixeira Melo"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "danieltm/origins": "^2.0"
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "packages": [
+        {
+            "name": "danieltm/origins",
+            "version": "V2.0.1",
+            "version_normalized": "2.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DanielTM999/origins.git",
+                "reference": "e4c3f3efe486cd4c978bcc7d7a31ca20a4e4ba43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DanielTM999/origins/zipball/e4c3f3efe486cd4c978bcc7d7a31ca20a4e4ba43",
+                "reference": "e4c3f3efe486cd4c978bcc7d7a31ca20a4e4ba43",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "time": "2025-07-03T06:13:38+00:00",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Daniel\\Origins\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Teixeira Melo"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/DanielTM999/origins/issues",
+                "source": "https://github.com/DanielTM999/origins/tree/V2.0.1"
+            },
+            "install-path": "../danieltm/origins"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}
