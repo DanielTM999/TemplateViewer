@@ -7,7 +7,7 @@
     use Daniel\TemplateViewer\MainFrame;
 
     class Html{
-        public static function render(string $html, Module|null $module = null, array $customProps = []){
+        public static function render(string $html, Module|null $module = null, array $customProps = [], bool $autorender = true): string{
 
             if(ModuleManager::isModuleAvailable()){
                 if($module == null){
@@ -25,7 +25,16 @@
             }
 
             extract($customProps);
-            include $path;  
+
+            ob_start();
+            include $path;
+            $output = ob_get_clean();
+            
+            if ($autorender) {
+                echo $output;
+            }
+
+            return $output;
         }
 
         public static function addIcon(string $src, Module|null $module = null){
@@ -71,13 +80,13 @@
                     $callFile = $module->getCallableFileName(false, 3);
                     $path = $module->getModuleProperty("views", $callFile);
                     if(!file_exists($path)){
-                        $path = $module->getModuleProperty($_ENV["MainFrame.viewsFolder"] ?? "views", $callFile);
+                        $path = $module->getModuleProperty($_ENV["MainFrame.templatesFolder"] ?? "views", $callFile);
                     }
                     $path = "$path/$callFile.css";
                 }else{
                     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
                     if ($ext === 'css') {
-                        $path = $module->getModuleProperty("views", $filename);
+                        $path = $module->getModuleProperty("resources", $filename);
                     } else {
                         $callFile = $module->getCallableFileName(false, 3);
                         $path = $module->getModuleProperty("views", "$filename/$callFile");
@@ -120,7 +129,7 @@
                     $callFile = $module->getCallableFileName(false, 3);
                     $path = $module->getModuleProperty("views", $callFile);
                     if(!file_exists($path)){
-                        $path = $module->getModuleProperty($_ENV["MainFrame.viewsFolder"] ?? "views", $callFile);
+                        $path = $module->getModuleProperty($_ENV["MainFrame.templatesFolder"] ?? "views", $callFile);
                     }
                     $path = "$path/$callFile.js";
                 }else{
@@ -139,7 +148,7 @@
                     }else{
                         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
                         if ($ext === 'js') {
-                            $path = $module->getModuleProperty("views", $filename);
+                            $path = $module->getModuleProperty("resources", $filename);
                         } else {
                             $callFile = $module->getCallableFileName(false, 3);
                             $path = $module->getModuleProperty("views", "$filename/$callFile");
@@ -169,17 +178,29 @@
 
     }
 
-    class Paths{
+    class Paths {
         public static function normalizePathToPublic(string $path): string {
-            $normalizedPath = str_replace('\\', '/', realpath($path));
-            $normalizedRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
-            $publicPath = str_replace($normalizedRoot, '', $normalizedPath);
+            if (str_starts_with($path, '/')) {
+                $publicPath = $path;
+            } else {
+                $realPath = realpath($path);
+                if ($realPath === false) {
+                    return '/';
+                }
+                $normalizedPath = str_replace('\\', '/', $realPath);
+                if (isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT'] !== '') {
+                    $normalizedRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+                    $publicPath = str_replace($normalizedRoot, '', $normalizedPath);
+                } else {
+                    $publicPath = $normalizedPath;
+                }
+            }
             if ($publicPath === '' || $publicPath[0] !== '/') {
                 $publicPath = '/' . $publicPath;
             }
-
             return $publicPath;
         }
     }
+
 
 ?>

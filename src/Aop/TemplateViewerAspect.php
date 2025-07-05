@@ -8,6 +8,7 @@
     use Daniel\Origins\ModuleManager;
     use Daniel\TemplateViewer\Annotations\AutoRender;
 use Daniel\TemplateViewer\Annotations\MasterPage;
+use Daniel\TemplateViewer\Annotations\MasterPageArguments;
 use Daniel\TemplateViewer\MainFrame;
     use ReflectionMethod;
 
@@ -27,17 +28,18 @@ use Daniel\TemplateViewer\MainFrame;
             $mainFrameName = AnnotationsUtils::getAnnotationArgs($method, MasterPage::class)[0] ?? null;
             MainFrame::setControllerModule($module);
             $returnType = $method->getReturnType();
+            $frameArgs = $this->getCustomArgs($method);
 
             if ($returnType instanceof \ReflectionNamedType) {
                 $typeName = $returnType->getName();
                 $isNullable = $returnType->allowsNull();
 
                 if ($typeName === 'void') {
-                    MainFrame::render($module, $title, "$folderName/$methodName.php", null, $mainFrameName);
+                    MainFrame::render($module, $title, "$folderName/$methodName.php", null, $mainFrameName, $frameArgs);
                     return null;
                 }
 
-                MainFrame::render($module, $title, "$folderName/$methodName.php", $result,  $mainFrameName);
+                MainFrame::render($module, $title, "$folderName/$methodName.php", $result,  $mainFrameName, $frameArgs);
                 if ($isNullable) {
                     return null;
                 } else {
@@ -45,8 +47,15 @@ use Daniel\TemplateViewer\MainFrame;
                 }
             }
 
-            MainFrame::render($module, $title, "$folderName/$methodName.php", $result, $mainFrameName);
+            MainFrame::render($module, $title, "$folderName/$methodName.php", $result, $mainFrameName, $frameArgs);
             return null;
+        }
+
+        private function getCustomArgs(ReflectionMethod &$method): array{
+            if(AnnotationsUtils::isAnnotationPresent($method, MasterPageArguments::class)){
+                return AnnotationsUtils::getAnnotationArgs($method, MasterPageArguments::class)[0] ?? [];
+            }
+            return [];
         }
 
     }

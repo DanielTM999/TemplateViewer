@@ -9,11 +9,11 @@
 
         private static ?Module $controllerModule;
 
-        public static function render(string|Module|null $moduleRef, string $title, string $content, $viewModel = null, string|null $mainFrameName = null){
+        public static function render(string|Module|null $moduleRef, string $title, string $content, $viewModel = null, string|null $mainFrameName = null, &$customArgs = []){
             if(ModuleManager::isModuleAvailable()){
-               self::renderWithModule($moduleRef, $title, $content, $viewModel, $mainFrameName); 
+               self::renderWithModule($moduleRef, $title, $content, $viewModel, $mainFrameName, $customArgs); 
             }else{
-                self::renderWithOutModule($title, $content, $viewModel, $mainFrameName);
+                self::renderWithOutModule($title, $content, $viewModel, $mainFrameName, $customArgs);
             }
         }
 
@@ -25,7 +25,7 @@
             return null;
         }
 
-        private static function renderWithModule(string|Module|null $moduleRef, string $title, string $content, $viewModel = null, string|null $mainFrameName = null){
+        private static function renderWithModule(string|Module|null $moduleRef, string $title, string $content, $viewModel = null, string|null $mainFrameName = null, &$customArgs = []){
             if(!isset($_ENV["MainFrame.Module"])){
                 throw new \RuntimeException("A variável de ambiente 'MainFrame.Module' não está definida. 
                 Certifique-se de que ela foi configurada corretamente no ambiente ou no arquivo .env.");
@@ -39,7 +39,7 @@
             }else{
                 $module = ModuleManager::getModuleByReference($moduleRef);
             }
-            $viewFolder = $_ENV["MainFrame.viewsFolder"] ?? "views";
+            $viewFolder = $_ENV["MainFrame.templatesFolder"] ?? "views";
 
             $mainFrameName = ($mainFrameName == null) ? self::getMainFrameName($module) : $mainFrameName;
             
@@ -61,12 +61,13 @@
                 ],
                 'frameModule' => $module,
                 'viewModel' => $viewModel,
+                'args' => $customArgs,
                 'mainFrameModule' => MainFrame::getMainModule()
             ]);
         }
 
-        private static function renderWithOutModule(string $title, string $content, $viewModel = null, string|null $mainFrameName = null){
-            $viewFolder = $_ENV["MainFrame.viewsFolder"] ?? "views";
+        private static function renderWithOutModule(string $title, string $content, $viewModel = null, string|null $mainFrameName = null, &$customArgs = []){
+            $viewFolder = $_ENV["MainFrame.templatesFolder"] ?? "views";
             $mainFrameName = self::getMainFrameName(null);
             $masterPage = "$viewFolder/$mainFrameName.php";
             self::includeWithVars($masterPage, [
@@ -74,6 +75,7 @@
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
                 ],
+                'args' => $customArgs,
                 'viewModel' => $viewModel,
             ]);
         }
