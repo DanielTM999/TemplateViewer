@@ -24,6 +24,10 @@
                 $path = $viewFolder."$html";
             }
 
+            if (!file_exists($path)) {
+                throw new \Exception("Arquivo não encontrado: $path");
+            }
+
             extract($customProps);
 
             ob_start();
