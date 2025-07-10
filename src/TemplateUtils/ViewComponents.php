@@ -149,6 +149,9 @@
                         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
                         if ($ext === 'js') {
                             $path = $module->getModuleProperty("resources", $filename);
+                            if(!file_exists($path)){
+                                $path = $module->getModuleProperty("views", $filename);
+                            }
                         } else {
                             $callFile = $module->getCallableFileName(false, 3);
                             $path = $module->getModuleProperty("views", "$filename/$callFile");
