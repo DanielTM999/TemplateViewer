@@ -117,6 +117,14 @@
     class Script{
 
         public static function injectJs(string|null $filename = null, bool $byfullPath = false , ?Module $moduleTarger = null) {
+            
+            if($filename != null && !empty($filename)){
+                if (Paths::isValidUrl($filename)) {
+                    echo "<script src=\"$filename\"></script>";
+                    return;
+                }
+            }
+            
             if(ModuleManager::isModuleAvailable()){
                 if($moduleTarger == null){
                     $controllerModule = MainFrame::getControllerModule();
@@ -206,6 +214,10 @@
                 $publicPath = '/' . $publicPath;
             }
             return $publicPath;
+        }
+
+        public static function isValidUrl($url){
+            return preg_match('#^(https?:)?//#', $url) || str_starts_with($url, 'data:');
         }
     }
 
