@@ -113,7 +113,7 @@
         }
 
         public static function getControllerModule(): Module|null {
-            return self::$controllerModule;
+            return self::$controllerModule ?? null;
         }
 
         public static function setControllerModule(?Module $controllerModule) {
