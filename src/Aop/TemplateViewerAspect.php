@@ -7,9 +7,9 @@
     use Daniel\Origins\Aop\Aspect;
     use Daniel\Origins\ModuleManager;
     use Daniel\TemplateViewer\Annotations\AutoRender;
-use Daniel\TemplateViewer\Annotations\MasterPage;
-use Daniel\TemplateViewer\Annotations\MasterPageArguments;
-use Daniel\TemplateViewer\MainFrame;
+    use Daniel\TemplateViewer\Annotations\MasterPage;
+    use Daniel\TemplateViewer\Annotations\MasterPageArguments;
+    use Daniel\TemplateViewer\MainFrame;
     use ReflectionMethod;
 
     final class TemplateViewerAspect extends Aspect
