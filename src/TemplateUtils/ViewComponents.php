@@ -82,9 +82,9 @@
 
                 if($filename == null || empty($filename)){
                     $callFile = $module->getCallableFileName(false, 3);
-                    $path = $module->getModuleProperty("views", $callFile);
+                    $path = $module->getModuleProperty("views", ucfirst($callFile));
                     if(!file_exists($path)){
-                        $path = $module->getModuleProperty($_ENV["MainFrame.templatesFolder"] ?? "views", $callFile);
+                        $path = $module->getModuleProperty($_ENV["MainFrame.templatesFolder"] ?? "views", ucfirst($callFile));
                     }
                     $path = "$path/$callFile.css";
                 }else{
@@ -93,7 +93,7 @@
                         $path = $module->getModuleProperty("resources", $filename);
                     } else {
                         $callFile = $module->getCallableFileName(false, 3);
-                        $path = $module->getModuleProperty("views", "$filename/$callFile");
+                        $path = $module->getModuleProperty("views", "$filename/".ucfirst($callFile));
                         $path = "$path/$callFile.css";
                     } 
                 }
@@ -139,9 +139,9 @@
 
                 if($filename == null || empty($filename)){
                     $callFile = $module->getCallableFileName(false, 3);
-                    $path = $module->getModuleProperty("views", $callFile);
+                    $path = $module->getModuleProperty("views", ucfirst($callFile));
                     if(!file_exists($path)){
-                        $path = $module->getModuleProperty($_ENV["MainFrame.templatesFolder"] ?? "views", $callFile);
+                        $path = $module->getModuleProperty($_ENV["MainFrame.templatesFolder"] ?? "views", ucfirst($callFile));
                     }
                     $path = "$path/$callFile.js";
                 }else{
@@ -166,7 +166,7 @@
                             }
                         } else {
                             $callFile = $module->getCallableFileName(false, 3);
-                            $path = $module->getModuleProperty("views", "$filename/$callFile");
+                            $path = $module->getModuleProperty("views", "$filename/".ucfirst($callFile));
                             $path = "$path/$callFile.js";
                         } 
                     }
