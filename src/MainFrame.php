@@ -104,8 +104,14 @@
         }
 
         private static function includeWithVars(string $file, array $vars = []): void {
-            extract($vars);
-            include_once $file;
+            $render = function() use ($file, $vars) {
+                extract($vars);
+                include $file;
+            };
+
+            ob_start();
+            $render();
+            echo ob_get_clean();
         }
 
         public static function getControllerModule(): Module|null {
