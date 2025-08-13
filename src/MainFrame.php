@@ -104,11 +104,9 @@
         }
 
         private static function includeWithVars(string $file, array $vars = []): string {
-            unset($_SESSION["Model"]);
-            $_SESSION["Model"] = $vars;
             extract($vars);
             ob_start();
-            include_once $file;
+            include $file;
             return ob_get_clean();
         }
 
