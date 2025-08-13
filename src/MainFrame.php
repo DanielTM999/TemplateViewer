@@ -54,14 +54,15 @@
                 );
             }
 
-            $frameModuleName = $module->getModuleName();
+            $mainFrameModule = MainFrame::getMainModule();
             echo self::includeWithVars($masterPage, [
                 'mainFrame' => [
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
                 ],
-                'frameModuleName' => $frameModuleName,
+                'frameModule' => $module,
                 'viewModel' => $viewModel,
+                'mainFrameModule' => $mainFrameModule,
                 'args' => $customArgs
             ]);
         }
