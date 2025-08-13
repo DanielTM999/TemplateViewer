@@ -59,7 +59,7 @@
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
                 ],
-                'frameModule' => $module,
+                'frameModule' => $module->getModuleName(),
                 'viewModel' => $viewModel,
                 'args' => $customArgs,
                 'mainFrameModule' => MainFrame::getMainModule()
