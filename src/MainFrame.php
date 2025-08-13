@@ -54,7 +54,7 @@
                 );
             }
 
-            self::includeWithVars($masterPage, [
+            echo self::includeWithVars($masterPage, [
                 'mainFrame' => [
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
@@ -70,7 +70,7 @@
             $viewFolder = $_ENV["MainFrame.templatesFolder"] ?? "views";
             $mainFrameName = self::getMainFrameName(null);
             $masterPage = "$viewFolder/$mainFrameName.php";
-            self::includeWithVars($masterPage, [
+            echo self::includeWithVars($masterPage, [
                 'mainFrame' => [
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
@@ -103,7 +103,8 @@
             return $default;
         }
 
-        private static function includeWithVars(string $file, array $vars = []): void {
+        private static function includeWithVars(string $file, array $vars = []): string {
+            extract($vars);
             $_SESSION["Model"] = $vars;
             ob_start();
             include_once $file;
