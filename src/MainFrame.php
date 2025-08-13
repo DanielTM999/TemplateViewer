@@ -104,14 +104,10 @@
         }
 
         private static function includeWithVars(string $file, array $vars = []): void {
-            $render = function() use ($file, $vars) {
-                extract($vars);
-                include $file;
-            };
-
+            $_SESSION["Model"] = $vars;
             ob_start();
-            $render();
-            echo ob_get_clean();
+            include_once $file;
+            return ob_get_clean();
         }
 
         public static function getControllerModule(): Module|null {
