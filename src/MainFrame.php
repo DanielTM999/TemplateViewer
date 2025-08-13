@@ -54,15 +54,15 @@
                 );
             }
 
+            $frameModuleName = $module->getModuleName();
             echo self::includeWithVars($masterPage, [
                 'mainFrame' => [
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
                 ],
-                'frameModule' => $module->getModuleName(),
+                'frameModuleName' => $frameModuleName,
                 'viewModel' => $viewModel,
-                'args' => $customArgs,
-                'mainFrameModule' => MainFrame::getMainModule()
+                'args' => $customArgs
             ]);
         }
 
@@ -104,8 +104,9 @@
         }
 
         private static function includeWithVars(string $file, array $vars = []): string {
-            extract($vars);
+            unset($_SESSION["Model"]);
             $_SESSION["Model"] = $vars;
+            extract($vars);
             ob_start();
             include_once $file;
             return ob_get_clean();
