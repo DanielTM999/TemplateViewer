@@ -195,9 +195,8 @@
 
     class Paths {
         public static function normalizePathToPublic(string $path): string {
-            if (str_starts_with($path, '/')) {
-                $publicPath = $path;
-            } else {
+            $rootDir = $_ENV["base.dir"];
+            if (str_starts_with($path, $rootDir)) {
                 $realPath = realpath($path);
                 if ($realPath === false) {
                     return '/';
@@ -209,6 +208,8 @@
                 } else {
                     $publicPath = $normalizedPath;
                 }
+            } else {
+                $publicPath = $path;
             }
             if ($publicPath === '' || $publicPath[0] !== '/') {
                 $publicPath = '/' . $publicPath;

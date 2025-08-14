@@ -107,10 +107,10 @@
         }
 
         private static function includeWithVars(string $file, array $vars = []): string {
-            $_SESSION["Template.Model"] = $vars;
             extract($vars);
+            $_SESSION["Template.Model"] = $vars;
             ob_start();
-            include $file;
+            include_once $file;
             return ob_get_clean();
         }
 
