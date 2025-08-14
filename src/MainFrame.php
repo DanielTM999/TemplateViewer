@@ -106,10 +106,21 @@
             return $default;
         }
 
-        private static function includeWithVars(string $file, array $vars = []) {
+        private static function includeWithVars($file, array $vars = []) {
+            if (session_status() === PHP_SESSION_NONE) session_start();
+            $_SESSION['Template.Model'] = $vars;
+            
+            ob_start();
+
             extract($vars);
-            $_SESSION["Template.Model"] = $vars;
+
+            foreach ($vars as $key => $value) {
+                $GLOBALS[$key] = $value;
+            }
+            
             include $file;
+
+            echo ob_get_clean();
         }
 
         public static function getControllerModule(): Module|null {
