@@ -55,7 +55,7 @@
             }
 
             $mainFrameModule = MainFrame::getMainModule();
-            echo self::includeWithVars($masterPage, [
+            self::includeWithVars($masterPage, [
                 'mainFrame' => [
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
@@ -73,7 +73,7 @@
             $viewFolder = $_ENV["MainFrame.templatesFolder"] ?? "views";
             $mainFrameName = self::getMainFrameName(null);
             $masterPage = "$viewFolder/$mainFrameName.php";
-            echo self::includeWithVars($masterPage, [
+            self::includeWithVars($masterPage, [
                 'mainFrame' => [
                     "MainFrame.title" => $title,
                     "MainFrame.content" => $content
@@ -106,12 +106,10 @@
             return $default;
         }
 
-        private static function includeWithVars(string $file, array $vars = []): string {
+        private static function includeWithVars(string $file, array $vars = []) {
             extract($vars);
             $_SESSION["Template.Model"] = $vars;
-            ob_start();
-            include_once $file;
-            return ob_get_clean();
+            include $file;
         }
 
         public static function getControllerModule(): Module|null {
