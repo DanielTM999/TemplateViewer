@@ -61,8 +61,10 @@
                     "MainFrame.content" => $content
                 ],
                 'frameModule' => $module,
+                'frameModuleName' => $module->getModuleName(),
                 'viewModel' => $viewModel,
                 'mainFrameModule' => $mainFrameModule,
+                'mainFrameModuleName' => $mainFrameModule->getModuleName(),
                 'args' => $customArgs
             ]);
         }
@@ -105,6 +107,7 @@
         }
 
         private static function includeWithVars(string $file, array $vars = []): string {
+            $_SESSION["Template.Model"] = $vars;
             extract($vars);
             ob_start();
             include $file;
