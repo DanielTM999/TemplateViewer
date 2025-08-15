@@ -107,19 +107,9 @@
         }
 
         private static function includeWithVars($file, array $vars = []) {
-            if (session_status() === PHP_SESSION_NONE) session_start();
-            $_SESSION['Template.Model'] = $vars;
-            
-            ob_start();
-
             extract($vars);
-
-            foreach ($vars as $key => $value) {
-                $GLOBALS[$key] = $value;
-            }
-            
+            ob_start();
             include $file;
-
             echo ob_get_clean();
         }
 
