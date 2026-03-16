@@ -1,6 +1,9 @@
 index.php
 .env
 .htaccess
+/vendor
+/vendor/composer
+/vendor/danieltm/origins
 /src/test
 /src/AppExemple
 movePasta.cmd

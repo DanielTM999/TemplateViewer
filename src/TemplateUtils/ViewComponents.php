@@ -13,6 +13,9 @@ class Html {
                 $controllerModule = MainFrame::getControllerModule();
                 $module = $controllerModule ?? ModuleManager::getCurrentModule();
             }
+            if (!array_key_exists('module', $customProps)) {
+                $customProps['module'] = $module;
+            }
             $path = $module->getModuleProperty("views", $html);
         } else {
             $viewFolder = $_ENV["MainFrame.views"] ?? $_ENV["base.dir"] . "/src/views";

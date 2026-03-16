@@ -7,7 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit329a76e42fb46da43da3980b091cd46c
 {
     public static $prefixLengthsPsr4 = array (
-        'D' => 
+        'D' =>
         array (
             'Danieltm\\TemplateViewer\\' => 24,
             'Daniel\\Origins\\' => 15,
@@ -15,11 +15,11 @@ class ComposerStaticInit329a76e42fb46da43da3980b091cd46c
     );
 
     public static $prefixDirsPsr4 = array (
-        'Danieltm\\TemplateViewer\\' => 
+        'Danieltm\\TemplateViewer\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'Daniel\\Origins\\' => 
+        'Daniel\\Origins\\' =>
         array (
             0 => __DIR__ . '/..' . '/danieltm/origins/src',
         ),
